@@ -1,0 +1,5 @@
+<% machines.each do |m| %>
+    <p>
+        <%= link_to "machine #{m.id}", simulator_machine_path(m), class:"btn btn-link" %>
+    </p>
+<% end %>

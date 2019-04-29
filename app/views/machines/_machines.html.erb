@@ -1,0 +1,32 @@
+<% machines.each do |m| %>
+    <div class="col-md-4" style="margin-bottom: 15px;">
+        <div class="card">
+            <div class="card-header">
+                Machine ID: <%= m.id %>
+                <span style="float: right; margin-left: 5px;">
+                    <%= link_to edit_machine_path(m), class:"btn btn-primary", title:"Edit Machine Details" do %>
+                        <i class="far fa-edit"></i>
+                    <% end %>
+                </span>
+                <span style="float: right;">
+                    <%= link_to machine_path(m), class:"btn btn-success", title: "View Machine Details" do %>
+                        <i class="fas fa-search"></i>
+                    <% end %>
+                </span>
+            </div>
+            <div class="card-body">
+                <section class="overview">
+                    <h6 class="text-center">Total Inventory Count</h6>
+                    <p class="font-15 text-center"><%= m.total_inventory_count %></p>
+                </section>
+                
+                <hr>
+                
+                <section class="machine-products">
+                    <h6 class="text-center">Inventory Details</h6>
+                    <%= render partial: "products/products", locals: { products: m.products } %>
+                </section>
+            </div>
+        </div>
+    </div>
+<% end %>

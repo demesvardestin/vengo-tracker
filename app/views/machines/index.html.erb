@@ -1,0 +1,45 @@
+<section id="dashboard">
+    <div class="modal fade" id="addNewMachineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Vengo Machine</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <%= render "machines/form" %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h6>
+        Machines in use: <span style="color: blue;"><%= @machines.count %></span>
+        <span style="margin-left: 10px;">
+            [<a href="#" data-toggle="modal" data-target="#addNewMachineModal"
+                class="btn btn-link" style="padding: 0;">
+                add a new machine</a>]
+        </span>
+        <span style="margin-left: 10px;">
+            [<a href="/generate_random?count=5" class="btn btn-link" style="padding: 0;">
+                install 5 new machines</a>]
+        </span>
+        <span style="margin-left: 10px;">
+            [<a href="/" class="btn btn-link" style="padding: 0;">
+                reload dashboard</a>]
+        </span>
+    </h6>
+    
+    <hr>
+    
+    <div class="row">
+        <% if @machines.present? %>
+            <%= render partial: "machines", locals: { machines: @machines } %>
+        <% else %>
+            <div class="col-md-12">
+                <p>No machine to track</p>
+            </div>
+        <% end %>
+    </div>
+</section>

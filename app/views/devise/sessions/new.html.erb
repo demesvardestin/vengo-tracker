@@ -1,0 +1,33 @@
+<section class="operator-login">
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+      <div class="card">
+        <div class="card-header">
+          Operator Login
+        </div>
+        <div class="card-body">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+            
+            <div class="field">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email" %>
+            </div>
+          
+            <div class="field">
+              <%= f.label :password %><br />
+              <%= f.password_field :password, class:"form-control", autocomplete: "current-password" %>
+            </div>
+          
+            <div class="actions">
+              <%= f.submit "Log in", class:"btn btn-primary btn-block", data: { "disable-with": "Logging you in..." } %>
+            </div>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

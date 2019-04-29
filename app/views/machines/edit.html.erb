@@ -1,0 +1,77 @@
+<section id="machine-edit">
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-4">
+            <%= link_to machine_path(@machine), class:"btn btn-primary" do %>
+                <i class="fas fa-angle-left"></i> return to machine details
+            <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    Machine Details
+                </div>
+                <div class="card-body">
+                    <%= render "form" %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">
+                    Machine Products
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="font-15"><b>Name</b></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="font-15"><b>Available</b></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="font-15"><b>Capacity</b></p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="font-15"><b>Threshold</b></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <% @machine.products.each do |prod| %>
+                            <div class="col-md-3">
+                                <p class="font-15"><%= prod.name %></p>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <p class="font-15"><%= prod.current_inventory_count %></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="font-15"><%= prod.max_inventory_count %></p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="font-15"><%= prod.threshold %></p>
+                            </div>
+                            <div class="col-md-1">
+                                <%= link_to edit_machine_product_path(@machine, prod), class:"btn btn-link" do %>
+                                    <i class="fas fa-pencil-alt"></i>
+                                <% end %>
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
+                            </div>
+                        <% end %>
+                        
+                        <% if @machine.has_slots_available %>
+                            <div class="col-md-12">
+                                <%= link_to new_machine_product_path(@machine), class:"btn btn-primary" do %>
+                                    <i class="fas fa-plus-circle"></i> add up to 6 products
+                                <% end %>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

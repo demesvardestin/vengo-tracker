@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-md-9">
+        <h5>
+            Machine ID: <%= @machine.id %>
+            <span style="margin-left: 15px;" class="badge badge-warning <%= some_need_refill @machine %>">
+                some or all products need refill
+            </span>
+            <span style="margin-left: 15px;" class="badge badge-danger <%= some_need_restock @machine %>">
+                some or all products are out of stock
+            </span>
+        </h5>
+    </div>
+    
+    <div class="col-md-3">
+        <%= link_to machine_path(@machine), class:"btn btn-primary btn-block" do %>
+            Go To Machine Page
+        <% end %>
+    </div>
+    
+    <div class="col-md-12">
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h5>Current Inventory</h5>
+    </div>
+    
+    <div class="col-md-2">
+        <p class="font-15"><b>Name</b></p>
+    </div>
+    <div class="col-md-2">
+        <p class="font-15"><b>Available</b></p>
+    </div>
+    <div class="col-md-1">
+        <p class="font-15"><b>Capacity</b></p>
+    </div>
+    <div class="col-md-1">
+        <p class="font-15"><b>Sold</b></p>
+    </div>
+    <div class="col-md-2">
+        <p class="font-15"><b>Status</b></p>
+    </div>
+    <div class="col-md-2">
+        <p class="font-15"><b>Last Sold</b></p>
+    </div>
+</div>
+<% @machine.products.each do |prod| %>
+    <div class="row" style="margin-top: 15px;" id="product-row-<%= prod.id %>">
+        <div class="col-md-2">
+            <p class="font-15"><%= prod.name %></p>
+        </div>
+        
+        <div class="col-md-2">
+            <p class="font-15"><%= prod.current_inventory_count %></p>
+        </div>
+        <div class="col-md-1">
+            <p class="font-15"><%= prod.max_inventory_count %></p>
+        </div>
+        <div class="col-md-1">
+            <p class="font-15"><%= prod.total_sold %></p>
+        </div>
+        <div class="col-md-2">
+            <p class="font-15 <%= prod.status.downcase.split(' ').join('-') %>">
+                <b><%= prod.status %></b>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p class="font-15"><%= prod.updated_at.strftime("%b %e %Y - %l:%M %p") %></p>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-primary" id="simulateBuy<%= prod.id %>"
+                onclick="simulateBuy(this, '<%= @machine.id %>', '<%= prod.id %>', '<%= prod.current_inventory_count %>')"
+                <% if prod.out_of_stock %>disabled<% end %>>
+                buy
+            </button>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-success"
+                onclick="simulateRefill(this, '<%= @machine.id %>', '<%= prod.id %>')"
+                <% if !prod.running_low %>disabled<% end %> id="simulateRefill<%= prod.id %>">
+                refill
+            </button>
+        </div>
+    </div>
+<% end %>

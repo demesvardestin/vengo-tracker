@@ -1,0 +1,120 @@
+<section class="machine-show">
+    <div class="row">
+        <div class="col-md-9">
+            <h4>
+                Machine ID: <%= @machine.id %>
+                <span style="margin-left: 15px;" class="badge badge-warning <%= some_need_refill @machine %>">
+                    some or all products need refill
+                </span>
+                <span style="margin-left: 15px;" class="badge badge-danger <%= some_need_restock @machine %>">
+                    some or all products are out of stock
+                </span>
+            </h4>
+        </div>
+        
+        <div class="col-md-3">
+            <%= link_to edit_machine_path(@machine), class:"btn btn-primary" do %>
+                Edit <i class="fas fa-pencil-alt"></i>
+            <% end %>
+            
+            <%= link_to simulator_machine_path(@machine), class:"btn btn-success" do %>
+                Web Simlulator <i class="fas fa-terminal"></i>
+            <% end %>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <p>
+        <span>
+            <b>Location</b>:
+            <%= @machine.full_location %>
+        </span>
+    </p>
+    
+    <p>
+        <span>
+            <b>Operator</b>:
+            <%= @machine.operator.name %>
+        </span>
+    </p>
+    
+    <p>
+        <span>
+            <b>Total Inventory Count</b>:
+            <%= @machine.total_inventory_count %> (current)
+        </span>
+    </p>
+    
+    <p>
+        <span>
+            <b>Total Items Sold</b>:
+            <%= @machine.total_items_sold %>
+        </span>
+    </p>
+    
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h5>Inventory Breakdown</h5>
+        </div>
+        
+        <div class="col-md-2">
+            <p class="font-15"><b>Name</b></p>
+        </div>
+        <div class="col-md-2">
+            <p class="font-15"><b>Available</b></p>
+        </div>
+        <div class="col-md-2">
+            <p class="font-15"><b>Capacity</b></p>
+        </div>
+        <div class="col-md-2">
+            <p class="font-15"><b>Sold</b></p>
+        </div>
+        <div class="col-md-2">
+            <p class="font-15"><b>Status</b></p>
+        </div>
+        <div class="col-md-2">
+            <p class="font-15"><b>Last Sold</b></p>
+        </div>
+        <% @machine.products.each do |prod| %>
+            <div class="col-md-2">
+                <p class="font-15"><%= prod.name %></p>
+            </div>
+            
+            <div class="col-md-2">
+                <p class="font-15"><%= prod.current_inventory_count %></p>
+            </div>
+            <div class="col-md-2">
+                <p class="font-15"><%= prod.max_inventory_count %></p>
+            </div>
+            <div class="col-md-2">
+                <p class="font-15"><%= prod.total_sold %></p>
+            </div>
+            <div class="col-md-2">
+                <p class="font-15 <%= prod.status.downcase.split(' ').join('-') %>">
+                    <b><%= prod.status %></b>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p class="font-15"><%= prod.updated_at.strftime("%b %e %Y - %l:%M %p") %></p>
+            </div>
+        <% end %>
+        
+        <% if @machine.products.any? {|prod| prod.threshold == 0} %>
+            <div class="col-md-12">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Some or all of these products have a threshold of 0. It's better
+                    to have a threshold above 0 to avoid out-of-stock status.
+                    [<%= link_to edit_machine_path(@machine), class:"btn btn-link", style: "padding: 0;" do %>
+                        Edit Products
+                    <% end %>]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</section>

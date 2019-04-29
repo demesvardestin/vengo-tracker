@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-5">
+        <p class="font-15"><b>Product Name</b></p>
+    </div>
+    <div class="col-md-4">
+        <p class="font-15"><b>Available</b></p>
+    </div>
+    <div class="col-md-3">
+        <p class="font-15"><b>Max</b></p>
+    </div>
+    <% products.each do |prod| %>
+        <div class="col-md-5">
+            <p class="font-15"><%= prod.name %></p>
+        </div>
+        
+        <div class="col-md-4">
+            <p class="font-15"><%= prod.current_inventory_count %></p>
+        </div>
+        <div class="col-md-3">
+            <p class="font-15"><%= prod.max_inventory_count %></p>
+        </div>
+    <% end %>
+</div>

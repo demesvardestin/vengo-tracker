@@ -1,0 +1,22 @@
+<section id="product-edit">
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-4">
+            <%= link_to machine_path(@product.machine), class:"btn btn-primary" do %>
+                <i class="fas fa-angle-left"></i> return to machine details
+            <% end %>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <b><%= @product.name %></b> Details for Machine <%= @product.machine.id %>
+                </div>
+                <div class="card-body">
+                    <%= render "form" %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
