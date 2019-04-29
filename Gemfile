@@ -10,6 +10,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'geocoder'
 gem 'devise'
+gem 'puma'
 
 group :test do
   gem 'factory_bot_rails', '~> 4.0'
