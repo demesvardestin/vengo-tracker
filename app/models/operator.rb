@@ -13,8 +13,6 @@ class Operator < ActiveRecord::Base
     has_many :machines, dependent: :destroy
     before_create :generate_secret_token
     
-    validates_presence_of :name
-    
     private
     
     def generate_secret_token
