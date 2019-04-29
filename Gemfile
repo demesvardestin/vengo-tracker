@@ -11,6 +11,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'geocoder'
 gem 'devise'
 gem 'puma'
+gem 'sendgrid-ruby'
+gem 'ruby_http_client'
 
 group :test do
   gem 'factory_bot_rails', '~> 4.0'

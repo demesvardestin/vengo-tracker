@@ -14,16 +14,38 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="bulkInstallation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bulk install a random number of machines</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/generate_random">
+                        <input type="text" class="form-control" name="count"
+                            placeholder="how many machines would you like to install?">
+                        <button type="submit" class="btn btn-success" style="margin-top: 15px;">
+                            install
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <h6>
         Machines in use: <span style="color: blue;"><%= @machines.count %></span>
         <span style="margin-left: 10px;">
             [<a href="#" data-toggle="modal" data-target="#addNewMachineModal"
                 class="btn btn-link" style="padding: 0;">
-                add a new machine</a>]
+                install a new machine</a>]
         </span>
         <span style="margin-left: 10px;">
-            [<a href="/generate_random?count=5" class="btn btn-link" style="padding: 0;">
-                install 5 new machines</a>]
+            [<a data-toggle="modal" data-target="#bulkInstallation" href="#"
+                class="btn btn-link" style="padding: 0;">
+                bulk installation</a>]
         </span>
         <span style="margin-left: 10px;">
             [<a href="/" class="btn btn-link" style="padding: 0;">

@@ -5,11 +5,11 @@
 - [Stack](https://github.com/demesvardestin/vengo-tracker#stack)
 - [Features](https://github.com/demesvardestin/vengo-tracker#features)
 - [Specs](https://github.com/demesvardestin/vengo-tracker#specs)
-    - [Main](https://github.com/demesvardestin/vengo-tracker#modularity)
-    - [API](https://github.com/demesvardestin/vengo-tracker#services)
-    - [Simulation](https://github.com/demesvardestin/vengo-tracker#http)
-    - [Tests](https://github.com/demesvardestin/vengo-tracker#modularity)
-- [To Do](https://github.com/demesvardestin/vengo-tracker#runtime-issues)
+    - [Main](https://github.com/demesvardestin/vengo-tracker#main)
+    - [API](https://github.com/demesvardestin/vengo-tracker#api)
+    - [Simulation](https://github.com/demesvardestin/vengo-tracker#simulation)
+    - [Tests](https://github.com/demesvardestin/vengo-tracker#tests)
+- [To Do](https://github.com/demesvardestin/vengo-tracker#todo)
 
 ## Summary
 This is a web and api based tracker (simulator) for Vengo machines.
@@ -155,6 +155,6 @@ The latter tests focus solely on the API portion, and check all endpoints for
 both machine and product. The current suite omits Devise and operator authentication,
 and simply tests the working functionality of the endpoints.
 
-## To Do
+## Todo
 UI is currently super basic and could use some work, mostly as far as realtime
 functionalities (using a framework like React or Vue).

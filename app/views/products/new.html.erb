@@ -20,6 +20,10 @@
                                 <label for="longitude">Max Inventory Count</label>
                                 <%= f.text_field :max_inventory_count, class:"form-control", placeholder:"count" %>
                             </div>
+                            <div class="field">
+                                <label for="longitude">Threshold</label>
+                                <%= f.text_field :threshold, class:"form-control", placeholder:"threshold" %>
+                            </div>
                         </div>
                         <div class="actions">
                             <%= f.submit "add product", class:"btn btn-success", data: { "disable-with": "adding..." } %>

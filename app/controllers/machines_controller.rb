@@ -1,10 +1,10 @@
 class MachinesController < ApplicationController
   before_action :authenticate_operator!
-  before_action :set_machine, only: [:show, :edit, :update]
+  before_action :set_machine, only: [:show, :edit, :update, :destroy]
   
   # GET machine list
   def index
-    @machines = current_operator.machines
+    @machines = current_operator.machines.order("created_at DESC")
     @machine = Machine.new
   end
   
@@ -23,10 +23,18 @@ class MachinesController < ApplicationController
     
     respond_to do |format|
       if @machine.save
-        format.html { redirect_to "/", notice: "New Vengo machine added. ID: #{@machine.id}" }
+        format.html { redirect_to @machine, notice: "New Vengo machine added. ID: #{@machine.id}" }
       else
         format.html { redirect_to "/", notice: "Vengo Machine couldn't be added. Please try again!" }
       end
+    end
+  end
+  
+  # DELETE machine
+  def destroy
+    @machine.destroy
+    respond_to do |format|
+      format.html { redirect_to "/", notice: "Uninstalled machine #{@machine.id}" }
     end
   end
   
@@ -43,6 +51,6 @@ class MachinesController < ApplicationController
   end
   
   def machine_params
-    params.require(:machine).permit(:latitude, :longitude, :operator)
+    params.require(:machine).permit(:latitude, :longitude)
   end
 end

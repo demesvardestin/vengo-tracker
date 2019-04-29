@@ -1,14 +1,18 @@
+require 'sendgrid-ruby'
+
 class Product < ActiveRecord::Base
+    include SendGrid
     belongs_to :machine
     has_one :tracker, dependent: :destroy
     
     before_create :randomize_category # randomize product name and max inventory count
     after_create :create_sales_tracker # create a sales tracker
+    after_update :send_email if Rails.env.production? # only send email if in production
     
-    validates_presence_of :current_inventory_count
-    validates_presence_of :max_inventory_count
-    validates_presence_of :threshold
-    validates_presence_of :name
+    validates_presence_of :current_inventory_count unless :not_auto_generated
+    validates_presence_of :max_inventory_count unless :not_auto_generated
+    validates_presence_of :threshold unless :not_auto_generated
+    validates_presence_of :name unless :not_auto_generated
     
     # total items sold
     def total_sold
@@ -63,7 +67,7 @@ class Product < ActiveRecord::Base
     
     def randomize_category(machine=nil)
         # if product creation is not random, stop running function
-        if self.name.present?
+        if !self.auto_generated
             return
         end
         
@@ -76,7 +80,7 @@ class Product < ActiveRecord::Base
         
         # recursively check if the selected category is already in the machine's
         # current products. if it's not, continue to end of function
-        until !machine_products_name.include?(selected_category[:name])
+        until !machine_products_names.include?(selected_category[:name])
             randomize_category(machine)
             return
         end
@@ -85,10 +89,40 @@ class Product < ActiveRecord::Base
         self.name = selected_category[:name]
         self.current_inventory_count = selected_category[:max_count]
         self.max_inventory_count = selected_category[:max_count]
+        self.threshold = selected_category[:max_count]/2
     end
     
     def create_sales_tracker
         # this object tracks the product's sales
         Tracker.create(product_id: self.id, current_value: 0)
+    end
+    
+    def not_auto_generated
+        !self.auto_generated
+    end
+    
+    def send_email
+        # only send email once, when product inventory has just dipped below
+        # the threshold level
+        if self.current_inventory_count == (threshold - 1)
+            from = SendGrid::Email.new(email: 'alert@vengotracker.com')
+            to = SendGrid::Email.new(email: self.machine.operator.email)
+            subject = "Some inventory products in Machine #{self.machine.id} are running low"
+            content_value = """
+                            Machine ID: #{self.machine.id}
+                            Product ID: #{self.id}
+                            Product Name: #{self.name}
+                            Product Current Inventory Count: #{self.current_inventory_count}
+                            Product Max Inventory Count: #{self.max_inventory_count}
+                            Product Threshold: #{self.threshold}
+                            """
+            content = SendGrid::Content.new(type: 'text/plain', value: content_value)
+            mail = SendGrid::Mail.new(from, subject, to, content)
+            
+            sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
+            response = sg.client.mail._('send').post(request_body: mail.to_json)
+            puts response.status_code
+            puts response.body
+        end
     end
 end

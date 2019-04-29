@@ -5,12 +5,12 @@
             <p><%= current_operator.name %></p>
         </div>
         <div class="field">
-            <label for="latitude">Latitude</label>
-            <%= f.text_field :latitude, class:"form-control", placeholder:"latitude", value:"#{@machine.latitude if @machine}" %>
+            <label for="latitude">Latitude (defaults to current)</label>
+            <%= f.text_field :latitude, class:"form-control", placeholder:"latitude", value:"#{@machine.id ? @machine.latitude : request.location.latitude }" %>
         </div>
         <div class="field">
-            <label for="longitude">Longitude</label>
-            <%= f.text_field :longitude, class:"form-control", placeholder:"longitude", value:"#{@machine.longitude if @machine}" %>
+            <label for="longitude">Longitude (defaults to current)</label>
+            <%= f.text_field :longitude, class:"form-control", placeholder:"longitude", value:"#{@machine.id ? @machine.longitude : request.location.longitude }" %>
         </div>
     </div>
     <div class="actions">

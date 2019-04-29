@@ -4,10 +4,9 @@ class Machine < ActiveRecord::Base
     has_many :trackers, through: :products
     
     before_create :randomize_location
-    after_create :fill_product_slots
     
-    validates_presence_of :latitude
-    validates_presence_of :longitude
+    validates_presence_of :latitude unless :not_auto_generated
+    validates_presence_of :longitude unless :not_auto_generated
     
     # machine location by latitude and longitude, for simplicity's sake.
     # future implementations could include full address
@@ -25,12 +24,23 @@ class Machine < ActiveRecord::Base
         trackers.map(&:current_value).sum
     end
     
+    # this method creates a random number of products ranging from 1 to 6,
+    # to fill the machine's slots
+    def fill_product_slots(id)
+        rand(1..6).times.each do |t|
+            Product.create(machine_id: id, threshold: 0, auto_generated: true)
+        end
+    end
+    
     # simple function for randomly generating (installing) an arbitrary number
     # of machines
     def self.generate_random(count, operator)
+        machines = []
         count.times.each do |t|
-            Machine.create(operator_id: operator.id)
+            machines << Machine.create(operator_id: operator.id, auto_generated: true)
         end
+        
+        machines.each { |m| m.fill_product_slots(m.id) }
     end
     
     # checks if more product slots can be added
@@ -43,17 +53,13 @@ class Machine < ActiveRecord::Base
     # this method randomizes machine location. latitude and longitude bounds
     # are chosen in order to restrict machine location to NYS area
     def randomize_location
-        if self.latitude.nil? && self.longitude.nil?
+        if self.auto_generated
             self.latitude = rand(40.60000..40.88600)
             self.longitude = rand(-74.08089..-72.21063)
         end
     end
     
-    # this method creates a random number of products ranging from 1 to 6,
-    # to fill the machine's slots
-    def fill_product_slots
-        rand(1..6).times.each do |t|
-            Product.create(machine_id: self.id, threshold: 0)
-        end
+    def not_auto_generated
+        !self.auto_generated
     end
 end

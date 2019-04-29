@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190427201835) do
+ActiveRecord::Schema.define(version: 20190429143434) do
 
   create_table "machines", force: :cascade do |t|
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "operator"
     t.integer  "operator_id"
+    t.boolean  "auto_generated", default: false
   end
 
   create_table "operators", force: :cascade do |t|
@@ -42,10 +43,11 @@ ActiveRecord::Schema.define(version: 20190427201835) do
     t.integer  "machine_id"
     t.integer  "current_inventory_count"
     t.integer  "max_inventory_count"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "inventory_status"
     t.integer  "threshold"
+    t.boolean  "auto_generated",          default: false
   end
 
   create_table "trackers", force: :cascade do |t|
