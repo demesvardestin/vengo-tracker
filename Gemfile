@@ -19,12 +19,13 @@ group :test do
 end
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.6'
   gem 'rspec-rails', '~> 3.5'
   gem 'byebug'
 end
 
 group :development do
+  gem 'sqlite3', '~> 1.3.6'
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
@@ -32,4 +33,3 @@ end
 group :production do
   gem 'pg', '~> 0.20.0'
 end
-
