@@ -24,17 +24,19 @@ class Api::ProductsController < ApiController
         @product = Product.new(product_params)
         @product.machine = @machine
         
+        # prevents adding more than 6 products to a machine
+        if @machine.products.size >= 6 && !params.empty?
+            render json: { :message => "Reached maximum slots for this machine" }, status: 201
+            return
+        end
+        
+        # rescues against validation error
         begin
             @product.save!
             render json: @product, status: 201
             return
         rescue
             render json: { :message => "Validation failed" }, status: 422
-            return
-        end
-        
-        if @machine.products.size >= 6 && !params.empty?
-            render json: { :message => "Reached maximum slots for this machine" }, status: 201
             return
         end
     end
