@@ -1,7 +1,6 @@
 class Machine < ActiveRecord::Base
     belongs_to :operator
     has_many :products, dependent: :destroy
-    has_many :trackers, through: :products
     
     before_create :randomize_location
     after_create :fill_product_slots

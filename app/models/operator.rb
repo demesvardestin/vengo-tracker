@@ -9,6 +9,7 @@ class Operator < ActiveRecord::Base
     
     devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :validatable
+    
     has_many :machines, dependent: :destroy
     before_create :generate_secret_token
     
