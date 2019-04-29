@@ -18,11 +18,13 @@ Demo - [VengoTracker](https://vengo-tracker.herokuapp.com "VengoTracker")
 ![vengotracker](https://github.com/demesvardestin/vengo-tracker/raw/master/public/images/vengo_tracker.png "VengoTracker")
 
 ## Stack
-- Rails 4.2.8 (Fixnum & Bignum deprecation causes a problem with production deployment when using earlier versions)
+- Rails 4.2.8 (Earlier versions cause a problem with production push due to Fixnum & Bignum deprecation)
 - Ruby 2.3.4
 - Bootstrap
 - jQuery
 - Geocoder
+- SendGrid
+- Puma (production)
 
 ## Features
 - CRUD - Web
