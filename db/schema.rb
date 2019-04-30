@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20190429143434) do
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string   "secret_token",           default: ""
+    t.string   "secret_token"
   end
 
   add_index "operators", ["email"], name: "index_operators_on_email", unique: true

@@ -4,7 +4,8 @@ require_relative 'api_controller.rb'
 
 class Api::ProductsController < ApiController
     before_action :set_product, except: [:index, :create]
-    before_action :set_machine, only: :create
+    before_action :set_machine, :check_products_count, only: :create
+    before_action :find_operator
     
     # GET products
     def index
@@ -23,12 +24,6 @@ class Api::ProductsController < ApiController
     def create
         @product = Product.new(product_params)
         @product.machine = @machine
-        
-        # prevents adding more than 6 products to a machine
-        if @machine.products.size >= 6 && !params.empty?
-            render json: { :message => "Reached maximum slots for this machine" }, status: 201
-            return
-        end
         
         # rescues against validation error
         begin
@@ -68,5 +63,22 @@ class Api::ProductsController < ApiController
     
     def set_machine
         @machine = Machine.find(params[:machine_id])
+    end
+    
+    # prevents adding more than 6 products to a machine
+    def check_products_count
+        set_machine
+        if @machine.products.size >= 6 && !params[:name].nil?
+            render json: { :message => "Reached maximum slots for this machine" }, status: 201
+            return
+        end
+    end
+    
+    def find_operator
+        @operator = current_operator || Operator.find_by(secret_token: params[:secret_token])
+        
+        if @operator.nil?
+            render json: { :message => "We were unable to authenticate you" }, :status => 401
+        end
     end
 end

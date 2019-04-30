@@ -4,6 +4,11 @@
             <div class="card-header">
                 Machine ID: <%= m.id %>
                 <span style="float: right; margin-left: 5px;">
+                    <%= link_to machine_path(m), class:"btn btn-danger", title: "Uninstall Machine", method: :delete do %>
+                        <i class="fas fa-times"></i>
+                    <% end %>
+                </span>
+                <span style="float: right; margin-left: 5px;">
                     <%= link_to edit_machine_path(m), class:"btn btn-primary", title:"Edit Machine Details" do %>
                         <i class="far fa-edit"></i>
                     <% end %>

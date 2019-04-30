@@ -8,11 +8,7 @@ class Api::MachinesController < ApiController
     
     # GET /api/machines
     def index
-        @machines = begin
-            find_operator.machines
-        rescue
-            Machine.where(operator_id: params[:operator_id])
-        end
+        @machines = find_operator.machines
         
         render json: @machines
     end
@@ -55,8 +51,11 @@ class Api::MachinesController < ApiController
         @machine = Machine.find(params[:id])
     end
     
-    # authentication check: devise user (web) and jwt user (api)
     def find_operator
-        @operator = current_operator
+        @operator = current_operator || Operator.find_by(secret_token: params[:secret_token])
+        
+        if @operator.nil?
+            render json: { :message => "We were unable to authenticate you" }, :status => 401
+        end
     end
 end

@@ -5,8 +5,7 @@ class Machine < ActiveRecord::Base
     
     before_create :randomize_location
     
-    validates_presence_of :latitude unless :not_auto_generated
-    validates_presence_of :longitude unless :not_auto_generated
+    validates_presence_of :latitude, :longitude unless :not_auto_generated
     
     # machine location by latitude and longitude, for simplicity's sake.
     # future implementations could include full address

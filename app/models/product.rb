@@ -9,10 +9,8 @@ class Product < ActiveRecord::Base
     after_create :create_sales_tracker # create a sales tracker
     after_update :send_email if Rails.env.production? # only send email if in production
     
-    validates_presence_of :current_inventory_count unless :not_auto_generated
-    validates_presence_of :max_inventory_count unless :not_auto_generated
-    validates_presence_of :threshold unless :not_auto_generated
-    validates_presence_of :name unless :not_auto_generated
+    validates_presence_of :current_inventory_count, :max_inventory_count,
+        :threshold, :name unless :not_auto_generated
     
     # total items sold
     def total_sold
