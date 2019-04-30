@@ -65,7 +65,7 @@ The RESTful JSON API, designed minimalistically. The current authentication
 is a simple check against the Operator's **secret_token**, which they supply on
 each call. Since this can get super repetitive, it certainly is not a preferred
 method for production. Something like [JWT](https://jwt.io/) would be better suited.
-More details [below]([API](https://github.com/demesvardestin/vengo-tracker#api).
+More details [below](https://github.com/demesvardestin/vengo-tracker#api).
 
 ## Specs
 
