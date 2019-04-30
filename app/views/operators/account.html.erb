@@ -6,6 +6,9 @@
                     Your Account Settings
                 </div>
                 <div class="card-body">
+                    <div id="secret-token">
+                        <p>Secret Token: <b><%= @operator.secret_token %></b></p>
+                    </div>
                     <%= form_for(@operator, :html => { :multipart => true, :id => "operator_form" }) do |f| %>
                         <div class="form-group">
                             <div class="field">

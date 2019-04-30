@@ -44,8 +44,15 @@ a random number of products randomized by name and inventory details.
 #### API
 Also included is a RESTful JSON API with CRUD endpoints:
 ```
-# MACHINES
+# The base url is https://vengo-tracker.herokuapp.com/
 #
+# Note: All requests should include a secret_token parameter to validate and
+# authenticate the operator. For example:
+# curl -X GET "https://vengo-tracker.herokuapp.com/api/machines?secret_token=your_secret_token"
+#
+# Endpoints
+#
+# MACHINES
 # retrieve list of machines. returns an array of machine objects
 GET /api/machines
 [
