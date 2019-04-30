@@ -7,7 +7,10 @@
                 </div>
                 <div class="card-body">
                     <div id="secret-token">
-                        <p>Secret Token: <b><%= @operator.secret_token %></b></p>
+                        <p>
+                            Secret Token: <b><%= @operator.secret_token %></b>
+                            <%= link_to "generate new", operator_generate_secret_token_path(@operator), class:"btn btn-link" %>
+                        </p>
                     </div>
                     <%= form_for(@operator, :html => { :multipart => true, :id => "operator_form" }) do |f| %>
                         <div class="form-group">

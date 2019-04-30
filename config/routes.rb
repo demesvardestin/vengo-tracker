@@ -32,10 +32,11 @@ Rails.application.routes.draw do
     resources :products
   end
   
-  resources :operators, only: [:create, :update]
+  resources :operators, only: [:create, :update] do
+    get "/account", to: "operators#account", as: "account"
+    get "/generate_secret_token", to: "operators#generate_secret_token"
+  end
   
-  get "/account", to: "operators#account"
-  get "/analytics", to: "operators#analytics"
   get "/generate_random", to: "machines#generate_random"
   
   root "machines#index"

@@ -63,10 +63,12 @@
         <div class="col-md-12 text-center">
             <h5>
                 Inventory Breakdown
-                <span style="margin-left: 5px;">
-                    [<%= link_to "add new product", new_machine_product_path(@machine),
-                        class:"btn btn-link" if @machine.has_slots_available %>]
-                </span>
+                <% if @machine.has_slots_available %>
+                    <span style="margin-left: 5px;">
+                        [<%= link_to "add new product", new_machine_product_path(@machine),
+                            class:"btn btn-link" %>]
+                    </span>
+                <% end %>
             </h5>
         </div>
         
