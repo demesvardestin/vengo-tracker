@@ -60,7 +60,7 @@ It allows the operator to simulate purchases and refills on any product of a giv
 machine. This component uses a vey minimal amount of jQuery to perform
 asynchronous calls to the server and update the view to reflect the changes.
 
-### API
+### JSON API
 The RESTful JSON API, designed minimalistically. The current authentication
 is a simple check against the Operator's **secret_token**, which they supply on
 each call. Since this can get super repetitive, it certainly is not a preferred
@@ -78,7 +78,7 @@ a random number of products randomized by name and inventory details.
 
 #### API
 Also included is a RESTful JSON API with CRUD endpoints. The base url is 
-https://vengo-tracker.herokuapp.com. All requests should include a secret_token
+https://vengo-tracker.herokuapp.com. All requests should include a **secret_token**
 parameter to validate and authenticate the operator. For example:
 
 ``` console
@@ -206,4 +206,6 @@ and simply tests the working functionality of the endpoints.
 
 ## Todo
 UI is currently super basic and could use some work, mostly as far as realtime
-functionalities (using a framework like React or Vue).
+functionalities (using a framework like React or Vue). Secondly, for the API, a more
+robust authentication system should be implemented for production commits, such
+as with [JSON Web Token](https://jwt.io/).
