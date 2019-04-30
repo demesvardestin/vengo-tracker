@@ -1,5 +1,7 @@
 class Operator < ActiveRecord::Base
     
+    # short module to generate a secret token used for minimal authentication
+    # for api requests. not quite suitable for production
     module RandomToken
         def self.random(len=32, character_set = ["A".."Z", "a".."z", "0".."9"])
             chars = character_set.map{|x| x.is_a?(Range) ? x.to_a : x }.flatten
@@ -15,6 +17,7 @@ class Operator < ActiveRecord::Base
     
     private
     
+    # method for generating secret token. ensures uniqueness of each token
     def generate_secret_token
         token = RandomToken.random(15)
         

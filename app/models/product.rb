@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
     
     before_create :randomize_category # randomize product name and max inventory count
     after_create :create_sales_tracker # create a sales tracker
-    after_update :send_email if Rails.env.production? # only send email if in production
+    after_update :send_low_inventory_alert
     
     validates_presence_of :current_inventory_count, :max_inventory_count,
         :threshold, :name unless :not_auto_generated
@@ -99,28 +99,10 @@ class Product < ActiveRecord::Base
         !self.auto_generated
     end
     
-    def send_email
-        # only send email once, when product inventory has just dipped below
-        # the threshold level
-        if self.current_inventory_count == (threshold - 1)
-            from = SendGrid::Email.new(email: 'alert@vengotracker.com')
-            to = SendGrid::Email.new(email: self.machine.operator.email)
-            subject = "Some inventory products in Machine #{self.machine.id} are running low"
-            content_value = """
-                            Machine ID: #{self.machine.id}
-                            Product ID: #{self.id}
-                            Product Name: #{self.name}
-                            Product Current Inventory Count: #{self.current_inventory_count}
-                            Product Max Inventory Count: #{self.max_inventory_count}
-                            Product Threshold: #{self.threshold}
-                            """
-            content = SendGrid::Content.new(type: 'text/plain', value: content_value)
-            mail = SendGrid::Mail.new(from, subject, to, content)
-            
-            sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
-            response = sg.client.mail._('send').post(request_body: mail.to_json)
-            puts response.status_code
-            puts response.body
+    def send_low_inventory_alert
+        # only send alert once: when inventory has reached the threshold
+        if self.current_inventory_count == self.threshold
+            MachineNotification.send_low_inventory_alert_to(self.machine.operator, self).deliver_now
         end
     end
 end

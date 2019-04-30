@@ -42,19 +42,29 @@ products from a machine; creating (installing) a random number of machines, with
 a random number of products randomized by name and inventory details.
 
 #### API
-Also included is a RESTful JSON API with CRUD endpoints:
+Also included is a RESTful JSON API with CRUD endpoints. The base url is 
+https://vengo-tracker.herokuapp.com. All requests should include a secret_token
+parameter to validate and authenticate the operator. For example:
+
+``` console
+foo@bar:~$ curl -X GET "https://vengo-tracker.herokuapp.com/api/machines/:id?secret_token=your_secret_token"
+{
+    created_at: 2019-04-29T03:17:23.898Z,
+    updated_at: 2019-04-29T03:17:23.898Z,
+    id: 30,
+    operator_id: 1,
+    latitude: 40.60000,
+    longitude: -74.08089
+}
+
 ```
-# The base url is https://vengo-tracker.herokuapp.com/
-#
-# Note: All requests should include a secret_token parameter to validate and
-# authenticate the operator. For example:
-# curl -X GET "https://vengo-tracker.herokuapp.com/api/machines?secret_token=your_secret_token"
-#
+
+``` sh
 # Endpoints
 #
 # MACHINES
 # retrieve list of machines. returns an array of machine objects
-GET /api/machines
+# GET /api/machines
 [
     {
         created_at: 2019-04-29T03:17:23.898Z,
@@ -70,7 +80,7 @@ GET /api/machines
 ]
 
 # create a new machine. returns the created object
-POST /api/machines
+# POST /api/machines
 {
     created_at: 2019-04-29T03:17:23.898Z,
     updated_at: 2019-04-29T03:17:23.898Z,
@@ -81,7 +91,7 @@ POST /api/machines
 }
 
 # retrieve a machine
-GET /api/machines/:id
+# GET /api/machines/:id
 {
     created_at: 2019-04-29T03:17:23.898Z,
     updated_at: 2019-04-29T03:17:23.898Z,
@@ -92,15 +102,15 @@ GET /api/machines/:id
 }
 
 # update a machine. returns an empty body
-PUT /api/machines/:id
+# PUT /api/machines/:id
 
 # delete a machine. returns an empty body
-DELETE /api/machines/:id
+# DELETE /api/machines/:id
 
 # PRODUCTS
 #
 # retrieve list of a machine's products. returns an array of product objects
-GET /api/machines/:machine_id/products
+# GET /api/machines/:machine_id/products
 [
     {
         id: 172,
@@ -119,7 +129,7 @@ GET /api/machines/:machine_id/products
 ]
 
 # add new product to a machine. returns the created object
-POST /api/machines/:machine_id/products
+# POST /api/machines/:machine_id/products
 {
     id: 172,
     name: "Snacks",
@@ -133,7 +143,7 @@ POST /api/machines/:machine_id/products
 }
 
 # retrieve a machine's product
-GET /api/machines/:machine_id/products/:id
+# GET /api/machines/:machine_id/products/:id
 {
     id: 172,
     name: "Snacks",
@@ -147,10 +157,10 @@ GET /api/machines/:machine_id/products/:id
 }
 
 # update a machine's product. returns an empty body
-PUT /api/machines/:machine_id/products/:id
+# PUT /api/machines/:machine_id/products/:id
 
 # delete a machine's product. returns an empty body
-DELETE /api/machines/:machine_id/products/:id
+# DELETE /api/machines/:machine_id/products/:id
 ```
 
 #### Simulation

@@ -1,0 +1,21 @@
+Hi, <%= @operator.name %>
+===============================================
+
+<%= @product.name %> products in Machine <%= @machine.id %> have reached
+the inventory threshold level. Please begin refilling its content to avoid
+going out of stock. More details below:
+
+
+Machine Location: <%= @machine.full_location %>
+Product ID: <%= @product.id %>
+Product Name: <%= @product.name %>
+Product Current Inventory: <%= @product.current_inventory_count %>
+Product Max Inventory: <%= @product.max_inventory_count %>
+Product Threshold: <%= @product.threshold %>
+<%= @product.name %> Sales Made: <%= @product.total_sold %>
+Total Sales Made: <%= @machine.total_items_sold %>
+
+Access Machine Dashboard: <%= @url %>
+
+Best,
+The VengoTracker Team

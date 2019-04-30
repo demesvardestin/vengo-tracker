@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi, <%= @operator.name %></h1>
+    
+    <p>
+      <%= @product.name %> products in Machine <%= @machine.id %> have reached
+      the inventory threshold level. Please begin refilling its content to avoid
+      going out of stock. More details below:
+    </p>
+    
+    <hr>
+    <hr>
+    
+    <div id="details">
+        <ul>
+            <li>Machine Location: <%= @machine.full_location %></li>
+            <li>Product ID: <%= @product.id %></li>
+            <li>Product Name: <%= @product.name %></li>
+            <li>Product Current Inventory: <%= @product.current_inventory_count %></li>
+            <li>Product Max Inventory: <%= @product.max_inventory_count %></li>
+            <li>Product Threshold: <%= @product.threshold %></li>
+            <li><%= @product.name %> Sales Made: <%= @product.total_sold %></li>
+            <li>Total Sales Made: <%= @machine.total_items_sold %></li>
+        </ul>
+    </div>
+    
+    <p>
+      Access Machine Dashboard: <%= @url %>.
+    </p>
+    
+    <p>
+        Best,<br>
+        The VengoTracker Team
+    </p>
+  </body>
+</html>
