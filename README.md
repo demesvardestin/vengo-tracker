@@ -82,7 +82,7 @@ https://vengo-tracker.herokuapp.com. All requests should include a secret_token
 parameter to validate and authenticate the operator. For example:
 
 ``` console
-foo@bar:~$ curl -X GET "https://vengo-tracker.herokuapp.com/api/machines/:id?secret_token=your_secret_token"
+foo@bar:~$ curl -X GET "https://vengo-tracker.herokuapp.com/api/machines/30?secret_token=your_secret_token"
 {
     created_at: 2019-04-29T03:17:23.898Z,
     updated_at: 2019-04-29T03:17:23.898Z,
