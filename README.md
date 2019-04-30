@@ -4,7 +4,7 @@
 - [Summary](https://github.com/demesvardestin/vengo-tracker#summary)
 - [Stack](https://github.com/demesvardestin/vengo-tracker#stack)
 - [Features](https://github.com/demesvardestin/vengo-tracker#features)
-- [Design]((https://github.com/demesvardestin/vengo-tracker#design))
+- [Design](https://github.com/demesvardestin/vengo-tracker#design)
 - [Specs](https://github.com/demesvardestin/vengo-tracker#specs)
     - [Main](https://github.com/demesvardestin/vengo-tracker#main)
     - [API](https://github.com/demesvardestin/vengo-tracker#api)
